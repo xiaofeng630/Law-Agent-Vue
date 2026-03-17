@@ -146,7 +146,7 @@ const sendMessage = async () => {
     // 保存用户的问题（发送前）
     const userQuestion = queryInput.value
 
-    await chatStore.sendMessage(queryInput.value)
+    await chatStore.sendMessage(queryInput.value, convStore.currentConversation?.id || null)
     queryInput.value = ''
 
     // 如果有当前会话，保存消息到后端
@@ -195,7 +195,7 @@ onMounted(() => {
 .chat-layout {
   display: flex;
   gap: 20px;
-  height: calc(100vh - 200px);
+  align-items: flex-start; /* 让侧边栏和主区域顶部对齐 */
 }
 
 .main-area {
@@ -207,14 +207,16 @@ onMounted(() => {
 }
 
 .chat-container {
-  flex: 1;
+  /* 完全固定高度，不会变化 */
+  height: 800px;
+  /* min-height: 480px;
+  max-height: 480px; */
   display: flex;
   flex-direction: column;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  min-height: 0;
 }
 
 .sources-panel {
@@ -222,10 +224,6 @@ onMounted(() => {
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-height: 350px;
-  overflow-y: auto;
-  flex-shrink: 0;
-  margin-top: 0;
 }
 
 .sources-panel:hover {
@@ -233,25 +231,25 @@ onMounted(() => {
 }
 
 .sources-panel .sources-title {
-  font-size: 18px;
+  font-size: 16px;
   color: #667eea;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   font-weight: 600;
 }
 
 .sources-panel .similarity-info {
-  padding: 12px;
+  padding: 10px;
   background: #f0f4ff;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
-  margin-bottom: 15px;
-  line-height: 1.6;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .sources-panel .sources-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 </style>
