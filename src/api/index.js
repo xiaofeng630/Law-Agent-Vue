@@ -16,14 +16,16 @@ export const ApiService = {
   /**
    * 发送聊天请求
    */
-  async chat(query, topK = 5, kbIds = [], history = []) {
+  async chat(query, topK = 5, kbIds = [], history = [], convId = null) {
     try {
-      const response = await apiClient.post(API_ENDPOINTS.CHAT, {
+      const payload = {
         query,
         top_k: topK,
         kb_ids: kbIds,
-        history
-      })
+        history,
+        conv_id: convId
+      }
+      const response = await apiClient.post(API_ENDPOINTS.CHAT, payload)
       return response.data
     } catch (error) {
       console.error('Chat API Error:', error)

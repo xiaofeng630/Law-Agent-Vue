@@ -26,7 +26,7 @@ export const useChatStore = defineStore('chat', {
   },
 
   actions: {
-    async sendMessage(query) {
+    async sendMessage(query, convId = null) {
       if (this.isSending || !query.trim()) return
 
       if (this.selectedKbIds.length === 0) {
@@ -47,7 +47,8 @@ export const useChatStore = defineStore('chat', {
           query,
           5, // topK
           this.selectedKbIds,
-          this.historyForRequest
+          this.historyForRequest,
+          convId
         )
 
         // 添加助手回复
